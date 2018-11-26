@@ -1,2 +1,2 @@
-# UI-UX-code-snippets
+# UI/UX code snippets
 UX/UI Code &amp; Design Inspiration
