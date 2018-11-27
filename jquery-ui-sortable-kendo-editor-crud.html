@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>KodeSain | Free Code Tutorials</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.common-material.min.css">
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.rtl.min.css">
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.min.css">
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.mobile.min.css">
+        <style type="text/css">
+            .container.sortable {
+                font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                margin: 10px auto;
+                padding: 30px 15px 15px;
+                border: 1px solid #DDDDDD;
+                border-radius: 4px;
+                position: relative;
+                word-wrap: break-word;
+                width: 100%;
+            }
+            .container.sortable:after {
+                background-color: #F5F5F5;
+                border: 1px solid #DDDDDD;
+                border-radius: 4px 0 4px 0;
+                color: #9DA0A4;
+                content: "Container";
+                font-size: 12px;
+                font-weight: bold;
+                left: -1px;
+                padding: 3px 7px;
+                position: absolute;
+                top: -1px;
+            }
+            .container.sortable .row {
+                background-color: #F5F5F5;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                -webkit-box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+                -moz-box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+                box-shadow: inset 0 1px 13px rgba(0, 0, 0, 0.1);
+                border: 1px solid #DDDDDD;
+                border-radius: 4px 4px 4px 4px;
+                margin: 15px 0;
+                position: relative;
+                padding: 25px 14px 0;
+            }
+            .container.sortable .row:before {
+                background-color: #F5F5F5;
+                border: 1px solid #DDDDDD;
+                border-radius: 4px 0 4px 0;
+                color: #9DA0A4;
+                content: "Row";
+                font-size: 12px;
+                font-weight: bold;
+                left: -1px;
+                line-height: 2;
+                padding: 3px 7px;
+                position: absolute;
+                top: -1px;
+            }
+            .container.sortable .row [class*='col-'] {
+                background-color: #FFFFFF;
+                border: 1px solid #DDDDDD;
+                border-radius: 4px 4px 4px 4px;
+                margin: 15px 0;
+                padding: 39px 19px 24px;
+                position: relative;
+            }
+            .container.sortable .row [class*='col-']:after {
+                background-color: #F5F5F5;
+                border: 1px solid #DDDDDD;
+                border-radius: 4px 0 4px 0;
+                color: #9DA0A4;
+                content: "Column";
+                font-size: 12px;
+                font-weight: bold;
+                left: -1px;
+                padding: 3px 7px;
+                position: absolute;
+                top: -1px;
+            }
+            .control {
+                position: absolute;
+                top: 3px;
+                right: 5px;
+            }
+            .control a.btn {
+                line-height: 1;
+            }
+        </style>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+        <script src="https://kendo.cdn.telerik.com/2018.3.1017/js/kendo.all.min.js"></script>
+        <script src="https://kendo.cdn.telerik.com/2018.3.1017/js/kendo.timezones.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $(".sortable").on("mousedown", function () {
+                    $(".sortable").sortable({
+                        cursor: "move",
+                        handle: ".handle"
+                    });
+                });
+                $(".sortable [class^='col-']").on("click", function () {
+                    $(".sortable").sortable("destroy");
+                });
+                $(".sortable [class^='col-']").kendoEditor();
+                $(".create").on("click", function () {
+                    $(".sortable").append('<div class="row"> \
+                        <div class="col-sm"> \
+                            <p>One of three columns</p> \
+                        </div> \
+                        <div class="col-sm"> \
+                            <p>One of three columns</p> \
+                        </div> \
+                        <div class="col-sm"> \
+                            <p>One of three columns</p> \
+                        </div> \
+                        <div class="control"> \
+                            <a class="btn btn-sm btn-info handle" href="#" role="button">drag</a> \
+                            <a class="btn btn-sm btn-danger remove" href="#" role="button">remove</a> \
+                        </div> \
+                    </div>');
+
+                    if (typeof $(".sortable [class^='col-']").data("kendoEditor") !== "undefined") {
+                        $(".sortable [class^='col-']").data("kendoEditor").destroy();
+                        $(".k-editor-widget, .k-list-container, .k-ct-popup").remove();
+                    }
+
+                    $(".sortable [class^='col-']").kendoEditor();
+                    $(".remove").off("click").on("click", function () {
+                        $(this).parent().parent().remove();
+                    });
+                });
+                $(".remove").on("click", function () {
+                    $(this).parent().parent().remove();
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="container text-right">
+            <a class="btn btn-sm btn-success create" href="#" role="button">create</a>
+        </div>
+        <div class="container sortable">
+            <div class="row">
+                <div class="col-sm">
+                    <p>One of three columns</p>
+                </div>
+                <div class="col-sm">
+                    <p>One of three columns</p>
+                </div>
+                <div class="col-sm">
+                    <p>One of three columns</p>
+                </div>
+                <div class="control">
+                    <a class="btn btn-sm btn-info handle" href="#" role="button">drag</a>
+                    <a class="btn btn-sm btn-danger remove" href="#" role="button">remove</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
