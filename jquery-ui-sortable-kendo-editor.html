@@ -12,8 +12,7 @@
         <style type="text/css">
             .container.sortable {
                 font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-                margin-left: 0px;
-                margin-top: 10px;
+                margin: 100px auto;
                 padding: 30px 15px 15px;
                 border: 1px solid #DDDDDD;
                 border-radius: 4px;
@@ -98,7 +97,7 @@
                     $(".sortable").sortable({
                         cursor: "move"
                     });
-                })
+                });
                 $(".sortable [class^='col-']").on("click", function () {
                     $(".sortable").sortable("destroy");
                 });
