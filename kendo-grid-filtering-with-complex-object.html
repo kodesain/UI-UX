@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>KodeSain | Free Code Tutorials</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.common-material.min.css">
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.min.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://kendo.cdn.telerik.com/2018.3.1017/js/kendo.all.min.js"></script>
+        <script src="https://kendo.cdn.telerik.com/2018.3.1017/js/kendo.timezones.min.js"></script>
+    </head>
+
+    <body>
+        <div id="grid"></div>
+
+        <script>
+            $(document).ready(function () {
+                var users = [
+                    {Id: 1, UserName: "Romi", FullName: "Romi Hakim", Email: "romi@mail.com", Roles: ["Admin", "Master"]},
+                    {Id: 1, UserName: "Eko", FullName: "Eko Nusa", Email: "eko@mail.com", Roles: ["Officer", "User"]},
+                    {Id: 1, UserName: "Agus", FullName: "Agus Ramlan", Email: "agus@mail.com", Roles: ["User", "Master"]}
+                ];
+
+                var roles = [
+                    {name: "Admin", value: "Admin"},
+                    {name: "Officer", value: "Officer"},
+                    {name: "User", value: "User"},
+                    {name: "Master", value: "Master"}
+                ];
+
+                $("#grid").kendoGrid({
+                    dataSource: {
+                        data: users,
+                        schema: {
+                            data: function (response) {
+                                var res = [];
+
+                                $(response).each(function (i, v) {
+                                    v['RolesName'] = v.Roles.toString();
+                                    v['RolesABC'] = v.Roles;
+                                    res.push(v);
+                                });
+
+                                return res;
+                            }
+                        }
+                    },
+                    scrollable: true,
+                    sortable: true,
+                    filterable: true,
+                    editable: true,
+                    pageable: {
+                        input: true,
+                        numeric: false
+                    },
+                    columns: [
+                        {field: "UserName", title: "User Name"},
+                        {field: "FullName", title: "Full Name"},
+                        {field: "Email"},
+                        {
+                            field: "Roles",
+                            template: function (item) {
+                                return item.Roles.join(', ');
+                            },
+                            editor: function (container, options) {
+                                $('<select  id="' + options.field + '" required name="' + options.field + '" data-bind="value : roles"/></select>')
+                                        .appendTo(container)
+                                        .kendoMultiSelect({
+                                            autoBind: false,
+                                            dataTextField: "name",
+                                            dataValueField: "value",
+                                            dataSource: {
+                                                data: roles
+                                            },
+                                            valuePrimitive: true
+                                        });
+                            },
+                            sortable: {
+                                compare: function (a, b) {
+                                    return a.RolesName === b.RolesName ? 0 : (a.RolesName > b.RolesName) ? 1 : -1;
+                                }
+                            }
+                        },
+                        {
+                            field: "RolesABC",
+                            template: function (item) {
+                                return item.RolesABC.join(', ');
+                            },
+                            editor: function (container, options) {
+                                $('<select  id="' + options.field + '" required name="' + options.field + '" data-bind="value : roles"/></select>')
+                                        .appendTo(container)
+                                        .kendoMultiSelect({
+                                            autoBind: false,
+                                            dataTextField: "name",
+                                            dataValueField: "value",
+                                            dataSource: {
+                                                data: roles
+                                            },
+                                            valuePrimitive: true
+                                        });
+                            },
+                            sortable: {
+                                compare: function (a, b) {
+                                    return a.RolesName === b.RolesName ? 0 : (a.RolesName > b.RolesName) ? 1 : -1;
+                                }
+                            },
+                            filterable: {
+                                dataSource: {
+                                    data: roles,
+                                    schema: {
+                                        data: function (response) {
+                                            var res = [];
+
+                                            $(response).each(function (i, v) {
+                                                res.push({"RolesABC": v.value});
+                                            });
+
+                                            return res;
+                                        }
+                                    }
+                                },
+                                multi: true
+                            }
+                        }
+                    ],
+                    filter: function (e) {
+                        if (e.field == "Roles" && e.filter !== null) {
+                            for (i = 0; i < e.filter.filters.length; i++) {
+                                e.filter.filters[i].field = "RolesName";
+                            }
+
+                            e.sender.dataSource.filter([]);
+                        }
+
+                        if (e.field == "RolesABC" && e.filter !== null) {
+                            for (i = 0; i < e.filter.filters.length; i++) {
+                                e.filter.filters[i].field = "RolesName";
+                                e.filter.filters[i].operator = "contains";
+                            }
+
+                            e.sender.dataSource.filter([]);
+                        }
+                    },
+                    filterMenuInit: function (e) {
+                        if (e.field == "Roles" || e.field == "RolesABC") {
+                            e.container.find("button[type=reset]").click(function () {
+                                $("#grid").data('kendoGrid').dataSource.filter([]);
+                            });
+                        }
+                    },
+                    filterMenuOpen: function (e) {
+                        if (e.field == "RolesABC") {
+                            if (e.sender.dataSource.filter()) {
+                                e.sender.dataSource.filter().filters.forEach(function (f) {
+                                    if (f.field == "RolesName") {
+                                        e.container.find("input[value='" + f.value + "']").click()
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
