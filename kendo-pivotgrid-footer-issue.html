@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>KodeSain | Free Code Tutorials</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.common-material.min.css">
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.min.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://kendo.cdn.telerik.com/2018.3.1017/js/kendo.all.min.js"></script>
+        <script src="https://kendo.cdn.telerik.com/2018.3.1017/js/kendo.timezones.min.js"></script>
+
+        <script src="data/products.js"></script>
+    </head>
+
+    <body>
+        <div class="hidden-on-narrow" id="configurator"></div>
+        <div class="hidden-on-narrow" id="pivotgrid"></div>
+
+        <div class="responsive-message"></div>
+
+        <style>
+            #pivotgrid {
+                display: inline-block;
+                vertical-align: top;
+                width: 70%;
+            }
+
+            #configurator {
+                display: inline-block;
+                vertical-align: top;
+            }
+
+            .k-grid-footer {
+                background-color: #eee;
+            }
+        </style>
+
+        <script>
+            $(document).ready(function () {
+                var pivotgrid = $("#pivotgrid").kendoPivotGrid({
+                    filterable: true,
+                    columnWidth: 120,
+                    height: 570,
+                    dataSource: {
+                        data: products,
+                        schema: {
+                            model: {
+                                fields: {
+                                    ProductName: {type: "string"},
+                                    UnitPrice: {type: "number"},
+                                    UnitsInStock: {type: "number"},
+                                    Discontinued: {type: "boolean"},
+                                    CategoryName: {field: "Category.CategoryName"}
+                                }
+                            },
+                            cube: {
+                                dimensions: {
+                                    ProductName: {caption: "All Products"},
+                                    CategoryName: {caption: "All Categories"},
+                                    Discontinued: {caption: "Discontinued"}
+                                },
+                                measures: {
+                                    "Sum": {field: "UnitPrice", format: "{0:c}", aggregate: "sum"},
+                                    "Average": {field: "UnitPrice", format: "{0:c}", aggregate: "average"}
+                                }
+                            }
+                        },
+                        columns: [{name: "CategoryName", expand: true}, {name: "ProductName"}],
+                        rows: [{name: "CategoryName"}, {name: "Discontinued", expand: false}, {name: "ProductName", expand: false}],
+                        measures: ["Sum"]
+                    }
+                }).data("kendoPivotGrid");
+
+                pivotgrid.bind("dataBound", function (e) {
+                    $(e.sender.rowsHeader[0].children[0].children[1].children).each(function (_, row) {
+                        if ($($(row).find(".k-grid-footer")).length > 0) {
+                            $(row).find("span.k-icon.k-i-collapse").click();
+                            $($(row).find("td")).each(function (i, col) {
+                                if (i > 0) {
+                                    $(col).css({"color": "transparent", "border-left-color": "transparent"})
+                                }
+                            });
+                        }
+                    });
+                });
+
+                $("#configurator").kendoPivotConfigurator({
+                    dataSource: pivotgrid.dataSource,
+                    filterable: true,
+                    height: 570
+                });
+            });
+        </script>
+    </body>
+</html>
