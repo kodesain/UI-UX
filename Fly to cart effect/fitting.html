@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>Fly to Cart Effect Using jQuery</title>
+
+        <!-- StyleSheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/free-templates/ecommerce/css/mdb.min.css">
+
+        <style type="text/css">
+            body {
+                min-height: 75rem;
+                padding-top: 8rem;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+            <div class="container">
+                <a class="navbar-brand waves-effect" href="#">
+                    <strong class="blue-text">GO-SHOP</strong>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect" href="home.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect" href="products.html">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect" href="fitting.html">Fitting Room</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect" href="checkout.html">Checkout</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav nav-flex-icons">
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect">
+                                <span class="badge red z-depth-1 mr-1"> 1 </span>
+                                <i class="fas fa-shopping-cart cart-anchor"></i>
+                                <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main role="main" class="container">
+            <div class="row wow fadeIn">
+                <div class="col-md-2 mb-4">
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="img-fluid">
+                            <button type="button" class="btn btn-light-green btn-sm btn-block p-2 try-on-clothes">Try On Clothes <i class="fas fa-arrow-alt-circle-right"></i> </button>
+                        </div>
+                    </div>
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14.jpg" class="img-fluid">
+                            <button type="button" class="btn btn-light-green btn-sm btn-block p-2 try-on-clothes">Try On Clothes <i class="fas fa-arrow-alt-circle-right"></i> </button>
+                        </div>
+                    </div>
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15.jpg" class="img-fluid">
+                            <button type="button" class="btn btn-light-green btn-sm btn-block p-2 try-on-clothes">Try On Clothes <i class="fas fa-arrow-alt-circle-right"></i> </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 mb-4 text-center">
+                    <img src="image/mannequin.png" class="img-fluid mannequin" style="width: 300px;">
+                    <img src="image/clothes.png" style="position: absolute; top: 110px; left: 190px;">
+                </div>
+                <div class="col-md-3 mb-4 p-4">
+                    <form>
+                        <div class="form-group">
+                            <label for="bust">Bust / Lingkar Dada</label>
+                            <input type="number" class="form-control" id="bust" min="50" max="120" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="waist">Waist / Pinggang</label>
+                            <input type="number" class="form-control" id="waist" min="50" max="120" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="hip">Hip / Pinggul</label>
+                            <input type="number" class="form-control" id="hip" min="50" max="120" value="0" required>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block p-2">Body Adjustment</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <!-- JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://mdbootstrap.com/previews/free-templates/ecommerce/js/mdb.min.js"></script>
+        <script src="script.js"></script>
+
+        <script type="text/javascript">
+            new WOW().init();
+        </script>
+    </body>
+</html>
